@@ -1,4 +1,6 @@
-var finished_anime = require('./finished_anime');
+"use strict";
+var util_1 = require("util");
+var finished_anime = require('./model/finished_anime');
 var cheerio = require('cheerio');
 var request = require('request');
 var end_page1 = 1;
@@ -41,16 +43,15 @@ function doIt(i) {
             for (var j = 0; j < pb['data']['archives'].length; j++) {
                 console.log('the title is: ' + pb['data']['archives'][j]['title']);
                 console.log('the aid is: ' + pb['data']['archives'][j]['aid']);
-                console.log('the played# is: ' + pb['data']['archives'][j]['play']);
-                console.log('the danmu is: ' + pb['data']['archives'][j]['video_review']);
-                console.log('the shoucang is: ' + pb['data']['archives'][j]['stat']['favorite']);
-                console.log('the upload time is: ' + pb['data']['archives'][j]['create']);
-                console.log('the mid is: ' + pb['data']['archives'][j]['mid']);
-                console.log('the picture is: ' + pb['data']['archives'][j]['pic']);
+                var playNum = void 0;
+                if (util_1.isNumber(pb['data']['archives'][j]['play']))
+                    playNum = pb['data']['archives'][j]['play'];
+                else
+                    playNum = 0;
                 var toSave = new finished_anime({
                     aid: pb['data']['archives'][j]['aid'],
                     title: pb['data']['archives'][j]['title'],
-                    play: pb['data']['archives'][j]['play'],
+                    play: playNum,
                     favorites: pb['data']['archives'][j]['stat']['favorite'],
                     danmaku: pb['data']['archives'][j]['video_review'],
                     create: pb['data']['archives'][j]['create'],
@@ -59,7 +60,7 @@ function doIt(i) {
                 });
                 toSave.save(function (err) {
                     if (err) {
-                        console.log("fail to save finished_anime");
+                        console.log("fail to save finished_anime " + err);
                     }
                     else
                         console.log('sample saved successfully!');
@@ -73,7 +74,7 @@ function doIt(i) {
                 console.log('received ' + data.length + ' bytes of compressed data');
             });
         });
-    }, Math.random() * 3000 + 8000 * i);
+    }, 8000 * i);
 }
 function crawler_anim() {
     var set_end_pagePromise = new Promise(function (resolve, reject) {

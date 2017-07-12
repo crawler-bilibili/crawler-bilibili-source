@@ -1,5 +1,6 @@
 // 'use strict'
-var finished_anime= require('./finished_anime');
+import {isNumber} from "util";
+var finished_anime= require('./model/finished_anime');
 var cheerio = require('cheerio');
 // var Promise = require('promise');
 
@@ -54,16 +55,21 @@ function doIt(i:number) {
                 for(let j=0;j<pb['data']['archives'].length;j++) {
                     console.log('the title is: ' + pb['data']['archives'][j]['title']);
                     console.log('the aid is: ' + pb['data']['archives'][j]['aid']);
-                    console.log('the played# is: ' + pb['data']['archives'][j]['play']);
-                    console.log('the danmu is: ' + pb['data']['archives'][j]['video_review']); // danmu shu
-                    console.log('the shoucang is: ' + pb['data']['archives'][j]['stat']['favorite']); // shoucang
-                    console.log('the upload time is: ' + pb['data']['archives'][j]['create']); // upload time
-                    console.log('the mid is: ' + pb['data']['archives'][j]['mid']); // user id
-                    console.log('the picture is: ' + pb['data']['archives'][j]['pic']); // uper
+                    // console.log('the played# is: ' + pb['data']['archives'][j]['play']);
+                    // console.log('the danmu is: ' + pb['data']['archives'][j]['video_review']); // danmu shu
+                    // console.log('the shoucang is: ' + pb['data']['archives'][j]['stat']['favorite']); // shoucang
+                    // console.log('the upload time is: ' + pb['data']['archives'][j]['create']); // upload time
+                    // console.log('the mid is: ' + pb['data']['archives'][j]['mid']); // user id
+                    // console.log('the picture is: ' + pb['data']['archives'][j]['pic']); // uper
+                    let playNum:number;
+                    if(isNumber(pb['data']['archives'][j]['play']))
+                        playNum = pb['data']['archives'][j]['play'];
+                    else
+                        playNum = 0;
                     let toSave = new finished_anime({
                         aid: pb['data']['archives'][j]['aid'],  //anime id
                         title: pb['data']['archives'][j]['title'],
-                        play: pb['data']['archives'][j]['play'],
+                        play: playNum,
                         favorites: pb['data']['archives'][j]['stat']['favorite'],
                         danmaku: pb['data']['archives'][j]['video_review'],  //danmu
                         create: pb['data']['archives'][j]['create'], //date posted
@@ -73,7 +79,7 @@ function doIt(i:number) {
 
                      toSave.save(function(err:any) {
                         if (err) {
-                            console.log("fail to save finished_anime");
+                            console.log("fail to save finished_anime "+err);
                         }
                         else console.log('sample saved successfully!');
                      });
@@ -93,7 +99,7 @@ function doIt(i:number) {
                     console.log('received ' + data.length + ' bytes of compressed data')
                 })
             });
-     }, Math.random()*3000+8000*i);
+     }, 8000*i);//Math.random()*3000+
 
 }
 
