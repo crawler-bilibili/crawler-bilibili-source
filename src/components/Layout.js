@@ -13,6 +13,56 @@ export default class Layout extends React.Component {
           </Link>
         </header>
         <div className="app-content">{this.props.children}</div>
+
+        <div className='header-wrapper'>
+            <div id='mainmenu'>
+             <ul>
+
+                <li>
+                  <a href='/' className='header-link'>
+                        MainPage
+                  </a>
+                </li>
+
+                <li>
+                  <a href='/' className='header-link'>
+                        TopAuthor
+                  </a>
+                </li>
+
+                <li>
+                  <a href='/' className='header-link'>
+                        DatatoChart
+                  </a>
+                </li>
+                <li>
+                  <a href='/' className='header-link'>
+                        NewAnime
+                  </a>
+                </li>
+                <li>
+                  <a href='/' className='header-link'>
+                        MyAccount
+                  </a>
+                </li>
+
+                <li>
+                  <form id="fullSearch">
+                    <input className='header-search' placeholder='Search...' id="fullURL"/>
+                  </form>
+                </li>
+
+                <li>
+                  <a href='/' className='header-link'>
+                        Login/Logout
+                  </a>
+                </li>
+              </ul>
+            </div>
+        </div>
+
+         
+
         <footer>
           <p>
             A place for Bilibili fun statistic and top rated/most recent animes.
