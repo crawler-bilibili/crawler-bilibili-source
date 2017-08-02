@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 
 // create a schema
 var author_schema = new Schema({
-  mid: { type: Number, required: true, unique: true },  //author id
+  mid: { type: String, required: true, unique: true },  //author id
   name: { type: String, required: true},  //name
   face: String,
   regtime: { type: Number, required: true},
