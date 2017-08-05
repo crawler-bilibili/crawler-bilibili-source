@@ -23,93 +23,113 @@ function sleep(milliseconds:number) {
 function get_end_page(){
 }
 
+let authorList:any={};
 
 function doIt(i:number) {
-
-    setTimeout(function() {//console.log(i);
-        request(
-            {
-                method: 'GET'
-                ,//callback=jQuery17203145239116586096_1499408237655&type=jsonp&
-                url: 'http://api.bilibili.com/archive_rank/getarchiverankbypartion?tid=32&pn='+i+'&_=1499408247911'
-                //,url:'http://space.bilibili.com/ajax/member/MyInfo?vmid=44945505'
-                ,
-                headers:{
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36',
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Referer': 'http://www.bilibili.com/video/part-twoelement-1.html#!page='+i+''
-                },
-                gzip: true
-                ,
-                encoding: 'utf-8'
-            }
-            , function (error: any, response: any, body: any) {
-                // body is the decompressed response body
-                // console.log('server encoded the data as: ' + (response.headers['content-encoding'] || 'identity'));
-                // let tmp=body.split('(');
-                // let pb: any = body.substring(41, body.length - 2);
-                // console.log(body);
-                // console.log(pb.length+"  ");
-                let pb:any;
-                try{pb= JSON.parse(body);}
-                catch(err) {png_no=i;redo=true;doIt(i);return;};//crawler_anim()
-                let countTime=0;
-                for(let j=0;j<pb['data']['archives'].length;j++,countTime++) {
-                    console.log(pb['data']['archives'][j]['create'] + ' title: ' + pb['data']['archives'][j]['title'] + ' (aid: ' + pb['data']['archives'][j]['aid']+' )');
-
-                    // console.log('the played# is: ' + pb['data']['archives'][j]['play']);
-                    // console.log('the danmu is: ' + pb['data']['archives'][j]['video_review']); // danmu shu
-                    // console.log('the shoucang is: ' + pb['data']['archives'][j]['stat']['favorite']); // shoucang
-                    // console.log('the upload time is: ' + pb['data']['archives'][j]['create']); // upload time
-                    // console.log('the mid is: ' + pb['data']['archives'][j]['mid']); // user id
-                    // console.log('the picture is: ' + pb['data']['archives'][j]['pic']); // uper
-                    let playNum:number;
-                    if(isNumber(pb['data']['archives'][j]['play']))
-                        playNum = pb['data']['archives'][j]['play'];
-                    else
-                        playNum = 0;
-                    let toSave = new finished_anime({
-                        aid: pb['data']['archives'][j]['aid'],  //anime id
-                        title: pb['data']['archives'][j]['title'],
-                        play: playNum,
-                        favorites: pb['data']['archives'][j]['stat']['favorite'],
-                        danmaku: pb['data']['archives'][j]['video_review'],  //danmu
-                        create: pb['data']['archives'][j]['create'], //date posted
-                        mid: pb['data']['archives'][j]['mid'],    //author id
-                        pic: pb['data']['archives'][j]['pic']
-                    });
-
-                    // toSave.save(function(err:any) {
-                    //    if (err) {
-                    //        console.log("fail to save finished_anime "+err);
-                    //    }
-                    //    else console.log('sample saved successfully!');
-                    // });
-
-                    author_crawler(pb['data']['archives'][j]['mid'], j, countTime);
-
-
+    let p= new Promise(function(resolve, reject) {
+        setTimeout(function () {//console.log(i);
+            request(
+                {
+                    method: 'GET'
+                    ,//callback=jQuery17203145239116586096_1499408237655&type=jsonp&
+                    url: 'http://api.bilibili.com/archive_rank/getarchiverankbypartion?tid=32&pn=' + i + '&_=1499408247911'
+                    //,url:'http://space.bilibili.com/ajax/member/MyInfo?vmid=44945505'
+                    ,
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Referer': 'http://www.bilibili.com/video/part-twoelement-1.html#!page=' + i + ''
+                    },
+                    gzip: true
+                    ,
+                    encoding: 'utf-8'
                 }
-            }
-        )
-            .on('data', function (data: any) {
-                //var $ = cheerio.load(data);
-                // console.log("&!!"+$.html());
-                // decompressed data as it is received
-                //  console.log('decoded chunk: ' + data)
-            })
-            .on('response', function (response: any) {
-                // unmodified http.IncomingMessage object
-                response.on('data', function (data: any) {
-                    // compressed data as it is received
-                    // console.log('received ' + data.length + ' bytes of compressed data')
-                })
-            });
-    }, 8000*i);//Math.random()*3000+
+                , function (error: any, response: any, body: any) {
+                    // body is the decompressed response body
+                    // console.log('server encoded the data as: ' + (response.headers['content-encoding'] || 'identity'));
+                    // let tmp=body.split('(');
+                    // let pb: any = body.substring(41, body.length - 2);
+                    // console.log(body);
+                    // console.log(pb.length+"  ");
+                    let pb: any;
+                    try {
+                        pb = JSON.parse(body);
+                    }
+                    catch (err) {
+                        png_no = i;
+                        redo = true;
+                        doIt(i);
+                        return;
+                    }//crawler_anim()
+                    let countTime = 0;
+                    for (let j = 0; j < pb['data']['archives'].length; j++, countTime++) {
+                        console.log(pb['data']['archives'][j]['create'] + ' title: ' + pb['data']['archives'][j]['title'] + ' (aid: ' + pb['data']['archives'][j]['aid'] + ' )');
 
+                        // console.log('the played# is: ' + pb['data']['archives'][j]['play']);
+                        // console.log('the danmu is: ' + pb['data']['archives'][j]['video_review']); // danmu shu
+                        // console.log('the shoucang is: ' + pb['data']['archives'][j]['stat']['favorite']); // shoucang
+                        // console.log('the upload time is: ' + pb['data']['archives'][j]['create']); // upload time
+                        // console.log('the mid is: ' + pb['data']['archives'][j]['mid']); // user id
+                        // console.log('the picture is: ' + pb['data']['archives'][j]['pic']); // uper
+                        let playNum: number;
+                        let mid = pb['data']['archives'][j]['mid'];
+                        if (isNumber(pb['data']['archives'][j]['play']))
+                            playNum = pb['data']['archives'][j]['play'];
+                        else
+                            playNum = 0;
+                        let toSave = new finished_anime({
+                            aid: pb['data']['archives'][j]['aid'],  //anime id
+                            title: pb['data']['archives'][j]['title'],
+                            play: playNum,
+                            favorites: pb['data']['archives'][j]['stat']['favorite'],
+                            danmaku: pb['data']['archives'][j]['video_review'],  //danmu
+                            create: pb['data']['archives'][j]['create'], //date posted
+                            mid: mid, //pb['data']['archives'][j]['mid'],    //author id
+                            pic: pb['data']['archives'][j]['pic']
+                        });
+
+
+                        // toSave.save(function(err:any) {
+                        //    if (err) {
+                        //        console.log("fail to save finished_anime "+err);
+                        //    }
+                        //    else console.log('sample saved successfully!');
+                        // });
+
+                        authorList[mid] = mid;
+                        // for(let k in authorList) {
+                        //     console.log('#' + authorList[k]);
+                        //
+                        // }
+                        // author_crawler(pb['data']['archives'][j]['mid'], j, countTime);
+
+
+                    }
+                    // console.log('d33_'+i);
+                    resolve(1);
+                }
+            )
+                .on('data', function (data: any) {
+                    //var $ = cheerio.load(data);
+                    // console.log("&!!"+$.html());
+                    // decompressed data as it is received
+                    //  console.log('decoded chunk: ' + data)
+                })
+                .on('response', function (response: any) {
+
+                    // unmodified http.IncomingMessage object
+                    response.on('data', function (data: any) {
+                        // compressed data as it is received
+                        // console.log('received ' + data.length + ' bytes of compressed data')
+                    })
+                });
+        }, 3000 * i);//Math.random()*3000+
+
+    });
+    return p;
 }
 
-function author_crawler(mid:string, j:number, countTime:number){
+function author_crawler(mid:string, j:number){
     setTimeout(function() {
         request.post({
                 url: 'http://space.bilibili.com/ajax/member/GetInfo',
@@ -123,7 +143,7 @@ function author_crawler(mid:string, j:number, countTime:number){
             , function optionalCallback(err: any, httpResponse: any, body: any) {
                 if (err) {
                     // author_crawler(pb, j);
-                    console.error('213failed:', err.statusCode);
+                     console.error('213failed:', err.statusCode);
                 }
                 let authorData: any;
                 try {
@@ -131,10 +151,10 @@ function author_crawler(mid:string, j:number, countTime:number){
                 }
                 catch (err) {
 
-                    author_crawler(mid, j,++countTime);
+                    author_crawler(mid, j);
                     return;
                 }
-                ;
+
 
                 console.log('Upload successful!  Server responded with:', authorData['data']['mid']);
 
@@ -162,7 +182,7 @@ function author_crawler(mid:string, j:number, countTime:number){
 
             }
         );
-    }, 8000*countTime);
+    }, 2000*j);
 }
 
 function crawler_anim() {
@@ -194,17 +214,36 @@ function crawler_anim() {
             }
         );
     });
+    let promiseArr:any=[];
+    set_end_pagePromise.then(function(num) {
+        return new Promise(function(resolve, reject) {
 
-    set_end_pagePromise.then(()=>{
-        console.log(png_no + ' of ' + end_page1);
-        for(let i=png_no; i<=end_page1; i++) {
-            doIt(i);
-            // if(redo){
-            //     redo = false;
-            //     return;
-            // }
-        }
+            console.log(png_no + ' of ' + end_page1);
+            for (let i = png_no; i <= end_page1; i++) {//
+                promiseArr.push(doIt(i));
+                // if(redo){
+                //     redo = false;
+                //     return;
+                // }
+            }console.log('3d19');
+            resolve(num);
+        })
+
+    })
+     .then(function () {
+            Promise.all(promiseArr).then(res => {
+                console.log('3dd '+authorList.length );
+                let j=1;
+                for (let k in authorList) {
+                    author_crawler(authorList[k], j);
+                    // console.log(authorList[k]);
+                    j++;
+
+                }
+                console.log(j);
+            });
     });
+
 }
 
 crawler_anim();
