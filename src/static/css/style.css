@@ -135,6 +135,41 @@ body {
   padding: 10px 0px;
 }
 
+.home .animes-selector {
+  clear: both;
+  padding: 2em;
+  text-align: center;
+}
+
+.home .animes-selector .anime-preview {
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+  display: inline-block;
+  margin: 0 1em 1em 0;
+  max-width: 200px;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+
+.home .animes-selector .anime-preview img {
+  margin: 0;
+  width: 100%;
+}
+
+.home .animes-selector .anime-preview .name {
+  color: #030303;
+  display: inline-block;
+  font-size: 1.6em;
+  overflow: hidden;
+  padding: .2em;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
 @import url(http://fonts.googleapis.com/css?family=Fredoka+One:400,700);
 #mainmenu {
   width: 90%;
