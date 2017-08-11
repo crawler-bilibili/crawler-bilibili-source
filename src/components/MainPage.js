@@ -4,7 +4,7 @@ import React from 'react';
 import AnimePreview from './AnimePreview';
 import Animes from '../data/MockAnimes';
 
-export default class IndexPage extends React.Component {
+export default class MainPage extends React.Component {
   render() {
     return (
       <div className="home">

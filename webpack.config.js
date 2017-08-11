@@ -1,11 +1,24 @@
-// webpack.config.js
+"use strict";
+
+const debug = process.env.NODE_ENV !== "production";
+
 const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
+  devtool: debug ? 'inline-sourcemap' : null,
   entry: path.join(__dirname, 'src', 'app-client.js'),
+  devServer: {
+    inline: true,
+    port: 3333,
+    contentBase: "src/static/",
+    historyApiFallback: {
+      index: '/index-static.html'
+    }
+  },
   output: {
     path: path.join(__dirname, 'src', 'static', 'js'),
+    publicPath: "/js/",
     filename: 'bundle.js'
   },
   module: {
@@ -14,11 +27,11 @@ module.exports = {
       loader: ['babel-loader'],
       query: {
         cacheDirectory: 'babel_cache',
-        presets: ['react', 'es2015']
+        presets: debug ? ['react', 'es2015', 'react-hmre'] : ['react', 'es2015']
       }
     }]
   },
-  plugins: [
+  plugins: debug ? [] : [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
@@ -30,6 +43,6 @@ module.exports = {
       sourcemap: false,
       beautify: false,
       dead_code: true
-    })
+    }),
   ]
 };

@@ -2,12 +2,15 @@
 
 import React from 'react';
 import { Link } from 'react-router';
+import Clock from './Clock';
+import Toggle from './Toggle';
 
 export default class Layout extends React.Component {
   render() {
     return (
       <div className="app-container">
         <header>
+          <Toggle />
           <Link to="/">
             <img className="logo" src="/img/bilibili.png"/>
           </Link>
