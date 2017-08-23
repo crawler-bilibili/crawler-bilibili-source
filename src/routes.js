@@ -11,7 +11,7 @@ import MainPage from './components/MainPage';
 
 const routes = (
   <Route path="/" component={Layout}>
-	<IndexRoute component={MainPage}/>
+	<IndexRoute component={MainPage} />
   </Route>
 );
 

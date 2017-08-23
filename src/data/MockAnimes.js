@@ -34,17 +34,7 @@ const animes = [
     "pic": "http://i0.hdslb.com/bfs/archive/d5b8e77b2fffef506090b0334c0a8989162d0836.jpg",
     "__v": 0
   },
-  {
-        "aid": "4790952",
-    "title": "【720P/全5集】There She Is! 超可爱的兔小姐和猫先生的爱情故事",
-    "play": 6693,
-    "favorites": 675,
-    "danmaku": 131,
-    "create": "2016-05-28 17:19",
-    "mid": "11159182",
-    "pic": "http://i0.hdslb.com/bfs/archive/9cac8be5256aed74ecaef9486508642fa137f1e9.jpg",
-    "__v": 0
-  }
+
 ];
 
 export default animes;

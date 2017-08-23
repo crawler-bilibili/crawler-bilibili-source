@@ -4,6 +4,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Clock from './Clock';
 import Toggle from './Toggle';
+import LoginControl from './LoginControl';
 
 export default class Layout extends React.Component {
   render() {
@@ -11,6 +12,7 @@ export default class Layout extends React.Component {
       <div className="app-container">
         <header>
           <Toggle />
+          <LoginControl />
           <Link to="/">
             <img className="logo" src="/img/bilibili.png"/>
           </Link>
