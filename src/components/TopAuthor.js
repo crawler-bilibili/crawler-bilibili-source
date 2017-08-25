@@ -1,10 +1,10 @@
 'use strict';
 
 import React from 'react';
-import AnimePreview from './AnimePreview';
+import AuthorPreview from './AuthorPreview';
 import axios from 'axios';
 
-export default class MainPage extends React.Component {
+export default class TopAuthor extends React.Component {
 	constructor (props) {
 		super (props);
 		this.state = {data : []};
@@ -13,7 +13,7 @@ export default class MainPage extends React.Component {
 
 
  	componentDidMount() {
- 			axios.get('http://localhost:3000/api/anime').then(res => {
+ 			axios.get('http://localhost:3000/api/author').then(res => {
  			this.setState({ data: res.data });
  		})
  	}
@@ -21,8 +21,8 @@ export default class MainPage extends React.Component {
   render() {
     return (
       <div className="home">
-        <div className="animes-selector">
-          {this.state.data.map(animeData => <AnimePreview key={animeData.aid} {...animeData} />)}
+        <div className="author-selector">
+          {this.state.data.map(authorData => <AuthorPreview key={authorData.mid} {...authorData} />)}
 
         </div>
       </div>

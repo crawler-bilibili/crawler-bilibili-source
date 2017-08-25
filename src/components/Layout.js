@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import Clock from './Clock';
 import Toggle from './Toggle';
 import LoginControl from './LoginControl';
+import sidebar from './sidebar';
 
 export default class Layout extends React.Component {
   render() {
@@ -17,6 +18,7 @@ export default class Layout extends React.Component {
             <img className="logo" src="/img/bilibili.png"/>
           </Link>
         </header>
+        <sidebar />
         <div className="app-content">{this.props.children}</div>
 
         <div className='header-wrapper'>
@@ -30,7 +32,7 @@ export default class Layout extends React.Component {
                 </li>
 
                 <li>
-                  <a href='/' className='header-link'>
+                  <a href='/author' className='header-link'>
                         TopAuthor
                   </a>
                 </li>
