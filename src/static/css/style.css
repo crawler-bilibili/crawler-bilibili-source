@@ -152,12 +152,12 @@ body {
   width: 100%;
 }
 
-.home .author-selector .anime-preview img {
+.home .animes-selector .anime-preview img {
   margin: 0;
   width: 100%;
 }
 
-.home .author-selector .anime-preview .name {
+.home .animes-selector .anime-preview .name {
   color: #030303;
   display: inline-block;
   font-size: 1.6em;
