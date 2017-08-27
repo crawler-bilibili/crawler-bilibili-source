@@ -14,25 +14,38 @@ apiRouter.get('/', function(req, res) {
 apiRouter.route('/anime')
  //retrieve all anime from the database
  .get(function(req, res) {
- //looks at our Comment Schema
+ //looks at our anime Schema
  anime.find(function(err, anime) {
  if (err)
  res.send(err);
- //responds with a json object of our database comments.
+ //responds with a json object of our database anime.
  res.json(anime)
  }).limit(12);
  })
 
 apiRouter.route('/author')
- //retrieve all anime from the database
+ //retrieve all author from the database
  .get(function(req, res) {
- //looks at our Comment Schema
+ //looks at our author Schema
  author.find(function(err, author) {
  if (err)
  res.send(err);
- //responds with a json object of our database comments.
+ //responds with a json object of our database author.
  res.json(author)
  }).limit(12);
  })
+
+ apiRouter.route('/newanime')
+ //retrieve all anime from the database
+ .get(function(req, res) {
+ //looks at our anime Schema
+ anime.find(function(err, anime) {
+ if (err)
+ res.send(err);
+ //responds with a json object of our database anime.
+ res.json(anime)
+ }).limit(12).sort({create:-1});
+ })
+
 
 module.exports = apiRouter;

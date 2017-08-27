@@ -7,6 +7,7 @@ import MainPage from './components/MainPage';
 // import ChartPage from './components/ChartPage';
 import AnimePage from './components/AnimePage';
 import TopAuthor from './components/TopAuthor';
+import NewAnimePage from './components/NewAnimePage';
 // import AuthorPage from './components/AuthorPage';
 // import NotFoundPage from './components/NotFoundPage';
 
@@ -15,6 +16,7 @@ const routes = (
 	<IndexRoute component={MainPage} />
 	<Route path="anime/:id" component={AnimePage}/>
 	<Route path="author" component={TopAuthor}/>
+	<Route path="newanime" component={NewAnimePage}/>
   </Route>
 );
 

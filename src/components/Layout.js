@@ -43,7 +43,7 @@ export default class Layout extends React.Component {
                   </a>
                 </li>
                 <li>
-                  <a href='/' className='header-link'>
+                  <a href='/newanime' className='header-link'>
                         NewAnime
                   </a>
                 </li>
