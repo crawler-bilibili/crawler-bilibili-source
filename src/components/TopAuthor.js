@@ -13,7 +13,7 @@ export default class TopAuthor extends React.Component {
 
 
  	componentDidMount() {
- 			axios.get('http://localhost:3000/api/author').then(res => {
+ 			axios.get('/api/author').then(res => {
  			this.setState({ data: res.data });
  		})
  	}

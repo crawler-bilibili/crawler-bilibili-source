@@ -13,7 +13,7 @@ export default class MainPage extends React.Component {
 
 
  	componentDidMount() {
- 			axios.get('http://localhost:3000/api/anime').then(res => {
+ 			axios.get('/api/anime').then(res => {
  			this.setState({ data: res.data });
  		})
  	}

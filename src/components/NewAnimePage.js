@@ -13,7 +13,7 @@ export default class NewAnimePage extends React.Component {
 
 
  	componentDidMount() {
- 			axios.get('http://localhost:3000/api/newanime').then(res => {
+ 			axios.get('/api/newanime').then(res => {
  			this.setState({ data: res.data });
  		})
  	}
