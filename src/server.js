@@ -41,8 +41,10 @@ app.use(function(req, res, next) {
 //Use our router configuration when we call /api
 app.use('/api', apiRouter);
 //starts the server and listens for requests
-app.listen(port, function() {
- console.log(`api running on port ${port}`);
+const apiport = 4000;
+console.log('Starting server on port ' + app.get('port'));
+app.listen(apiport, function() {
+ console.log(`apiport running on port ${apiport}`);
 });
 
 
