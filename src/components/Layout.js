@@ -74,9 +74,6 @@ export default class Layout extends React.Component {
           <p>
             A place for Bilibili fun statistic and top rated/most recent animes.
           </p>
-          <p>
-            Built with <strong>❤</strong>︎ and <strong>Passion</strong> by two bilibili Fans.
-          </p>
         </footer>
       </div>
     );

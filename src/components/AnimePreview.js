@@ -10,7 +10,6 @@ export default class AnimePreview extends React.Component {
         <div className="anime-preview">
           <img src={`${this.props.pic}`}/>
           <h2 className="name">{this.props.title}</h2>
-          <h2 className="name">{this.props.create}</h2>
         </div>
       </Link>
     );
